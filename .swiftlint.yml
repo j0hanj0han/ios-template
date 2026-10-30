@@ -1,0 +1,40 @@
+included:
+  - App
+  - Packages
+excluded:
+  - Packages/*/.build
+
+# SwiftFormat gère la mise en forme : on coupe les règles qui se contredisent.
+disabled_rules:
+  - trailing_comma
+  - opening_brace
+
+opt_in_rules:
+  - empty_count
+  - first_where
+  - contains_over_first_not_nil
+  - closure_spacing
+  - explicit_init
+  - fatal_error_message
+  - sorted_imports
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+  - private_swiftui_state
+  - accessibility_label_for_image
+
+line_length:
+  warning: 120
+  error: 160
+
+type_body_length:
+  warning: 200
+
+function_body_length:
+  warning: 40
+
+custom_rules:
+  no_any_view:
+    name: "Pas d'AnyView"
+    regex: '\bAnyView\b'
+    message: "AnyView est interdit : utilise some View, @ViewBuilder ou un enum de sous-vues."
+    severity: error

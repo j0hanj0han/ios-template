@@ -1,0 +1,35 @@
+# Xcode — le projet est généré par XcodeGen
+*.xcodeproj
+*.xcworkspace
+!Packages/**/.swiftpm/xcode/package.xcworkspace
+xcuserdata/
+DerivedData/
+build/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Ruby / Fastlane
+vendor/bundle/
+.bundle/
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+*.ipa
+*.dSYM.zip
+
+# Secrets : jamais dans le repo
+*.p8
+*.p12
+*.cer
+*.mobileprovision
+.env
+.env.*
+
+# Claude Code (réglages locaux)
+.claude/settings.local.json
+
+.DS_Store

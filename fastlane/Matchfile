@@ -1,0 +1,5 @@
+# Le dépôt de certificats et son mot de passe viennent des GitHub Secrets (MATCH_GIT_URL, MATCH_PASSWORD).
+git_url(ENV["MATCH_GIT_URL"]) if ENV["MATCH_GIT_URL"]
+storage_mode("git")
+type("appstore")
+app_identifier(ENV.fetch("APP_IDENTIFIER", "com.example.apptemplate"))

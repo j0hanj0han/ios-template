@@ -1,0 +1,3 @@
+# Valeurs propres à chaque app : configurées par /setup-ci (plugin ios-toolkit), via variables d'environnement.
+app_identifier(ENV.fetch("APP_IDENTIFIER", "com.example.apptemplate"))
+team_id(ENV["TEAM_ID"]) if ENV["TEAM_ID"]
