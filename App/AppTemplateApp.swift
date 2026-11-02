@@ -18,6 +18,7 @@ struct AppTemplateApp: App {
         WindowGroup {
             HomeView()
                 .environment(entitlements)
+                .environment(\.purchaseService, purchases)
                 .task { await purchases.start() }
         }
     }

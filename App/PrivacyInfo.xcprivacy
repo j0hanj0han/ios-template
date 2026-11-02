@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Manifeste de confidentialité exigé par l'App Store.
+  Le template ne suit pas l'utilisateur, ne collecte rien et n'utilise aucune API à raison déclarée.
+  À compléter par chaque app : par exemple @AppStorage (UserDefaults) impose
+  NSPrivacyAccessedAPICategoryUserDefaults avec la raison CA92.1.
+-->
+<plist version="1.0">
+<dict>
+    <key>NSPrivacyTracking</key>
+    <false/>
+    <key>NSPrivacyTrackingDomains</key>
+    <array/>
+    <key>NSPrivacyCollectedDataTypes</key>
+    <array/>
+    <key>NSPrivacyAccessedAPITypes</key>
+    <array/>
+</dict>
+</plist>

@@ -66,5 +66,6 @@ schemes:
         - package: FeatureHome/FeatureHomeTests
     run:
       config: Debug
+      storeKitConfiguration: Packages/Monetization/StoreKit/Products.storekit
     archive:
       config: Release

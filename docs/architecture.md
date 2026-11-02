@@ -71,6 +71,35 @@ La logique non triviale sort de la vue dans un type pur (voir `AccessStatus` dan
 - Un service **écrit** dans un modèle observable (`EntitlementStore`) et les vues **lisent** ce modèle.
 - Toute l'UI et l'état partagé sont `@MainActor` (strict concurrency complet).
 
+### Appeler un service depuis une Feature
+
+Un protocole ne peut pas passer par `.environment(_:)` (réservé aux classes `@Observable`) : `Core` l'expose donc comme valeur d'environnement, injectée par `App`.
+
+```swift
+// App
+HomeView()
+    .environment(\.purchaseService, purchases)
+
+// Feature : ne connaît que le protocole, jamais StoreKit
+struct PaywallView: View {
+    @Environment(\.purchaseService) private var purchaseService
+
+    var body: some View {
+        Button("Passer Premium") {
+            Task { _ = try? await purchaseService?.purchase(productID: "…") }
+        }
+    }
+}
+```
+
+La valeur est `nil` dans les previews : la vue s'affiche, le bouton ne fait rien.
+
+## Monétisation
+
+- Produits de test : `Packages/Monetization/StoreKit/Products.storekit`, branché sur l'action Run du scheme. Lancée depuis Xcode, l'app achète sans App Store ni compte sandbox. Chaque app y remplace `com.example.apptemplate.premium.yearly` par ses vrais identifiants, comme dans `App/`.
+- Pas de test d'achat automatisé : `SKTestSession` ne renvoie aucun produit dans les tests de ce projet, même hébergés par l'app (constaté avec Xcode 27.2 et le simulateur iOS 26.5).
+- `App/PrivacyInfo.xcprivacy` : manifeste de confidentialité exigé par l'App Store, vide dans le template. Chaque app y déclare ce qu'elle collecte et ses API à raison déclarée (`UserDefaults`, etc.).
+
 ## Liquid Glass
 
 - Les composants système (`NavigationStack`, `TabView`, `.toolbar`, sheets) ont déjà le verre. Ne pas leur mettre de fond.
