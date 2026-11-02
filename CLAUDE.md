@@ -46,12 +46,12 @@ fastlane/  .github/workflows/  .mcp.json
 ## Commandes
 - Setup : `mint bootstrap && xcodegen generate`
 - Tests : `bundle exec fastlane test`
-- Build, tests et simulateur : passer par XcodeBuildMCP en priorité
+- Build, tests et simulateur : passer par MobileBuildMCP (ex-XcodeBuildMCP, version figée dans `.mcp.json`) en priorité
 
 ## Boucle de dev
 1. Lire `PLAN.md`, section « État courant » (créé pour chaque app par `/new-app` ; absent dans le template lui-même)
 2. Coder le jalon
-3. Build + tests via XcodeBuildMCP, lancer dans le simulateur, capture d'écran si c'est de l'UI
+3. Build + tests via MobileBuildMCP, lancer dans le simulateur, capture d'écran si c'est de l'UI
 4. Corriger jusqu'au vert
 5. Mettre à jour « État courant » dans `PLAN.md`, puis commit
 
