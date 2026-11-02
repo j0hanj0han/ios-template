@@ -13,7 +13,7 @@ concurrency:
 jobs:
   test:
     if: github.event_name == 'pull_request'
-    runs-on: macos-26
+    runs-on: xcode-27
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
@@ -22,7 +22,7 @@ jobs:
   beta:
     # Activé une fois la signature configurée par /setup-ci (variable de repo SIGNING_READY=true).
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.SIGNING_READY == 'true'
-    runs-on: macos-26
+    runs-on: xcode-27
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
@@ -39,7 +39,7 @@ jobs:
 
   release:
     if: startsWith(github.ref, 'refs/tags/v') && vars.SIGNING_READY == 'true'
-    runs-on: macos-26
+    runs-on: xcode-27
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
