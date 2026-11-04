@@ -50,7 +50,7 @@ fastlane/  .github/workflows/  .mcp.json
 - Build, tests et simulateur : passer par MobileBuildMCP (ex-XcodeBuildMCP, version figée dans `.mcp.json`) en priorité
 
 ## Boucle de dev
-1. Lire `PLAN.md`, section « État courant » (créé pour chaque app par `/new-app` ; absent dans le template lui-même)
+1. Lire `PLAN.md`, section « État courant » (créé pour chaque app par `/ios-toolkit:new-app` ; absent dans le template lui-même)
 2. Coder le jalon
 3. Build + tests via MobileBuildMCP, lancer dans le simulateur, capture d'écran si c'est de l'UI
 4. Corriger jusqu'au vert
@@ -61,7 +61,7 @@ fastlane/  .github/workflows/  .mcp.json
 - Lanes : `test` sur chaque PR, `beta` vers TestFlight, `release` vers l'App Store
 - Runner macOS, outils installés via `Gemfile.lock` et `Mintfile`
 - Signature via match, secrets dans GitHub Secrets uniquement
-- La configuration propre à chaque app (App Store Connect, match, secrets) se fait avec la skill `/setup-ci` du plugin `ios-toolkit`, pas ici
+- La configuration propre à chaque app (App Store Connect, match, secrets) se fait avec la skill `/ios-toolkit:setup-ci` du plugin [ios-toolkit](https://github.com/j0hanj0han/ios-toolkit), pas ici
 
 ## Mode pédagogique (toujours actif)
 Johan apprend SwiftUI, avec un background senior Python.
