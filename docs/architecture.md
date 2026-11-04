@@ -100,7 +100,8 @@ La valeur est `nil` dans les previews : la vue s'affiche, le bouton ne fait rien
 - Test d'achat automatisé : `AppTests/` (cible `AppTemplateTests`) achète via `SKTestSession` avec ce même fichier. StoreKitTest impose :
   - une **app hôte** : ces tests ne peuvent pas vivre dans le package Monetization ;
   - un **simulateur de la même version que le SDK** : avec Xcode 27.2, le test passe sur iOS 27.2 et échoue toujours sur iOS 26.5 (aucun produit renvoyé). Pour la même raison, la CI fige Xcode 27.0 : l'image `xcode-27` n'a de simulateur iPhone qu'en iOS 27.0.
-- Connu : sur un simulateur jamais démarré, l'achat échoue au premier lancement puis passe. Cause non confirmée : piste de l'app hôte qui appelle `purchases.start()` avant que le test installe sa configuration.
+- Quand l'app sert d'hôte aux tests, elle n'appelle pas `purchases.start()` : interroger StoreKit avant que le test installe sa configuration laissait un simulateur neuf sans produits (`productNotFound`).
+- Connu : sur un simulateur jamais démarré, l'achat lui-même peut rester bloqué. Le test a une limite d'une minute pour ne pas bloquer la CI.
 - `App/PrivacyInfo.xcprivacy` : manifeste de confidentialité exigé par l'App Store, vide dans le template. Chaque app y déclare ce qu'elle collecte et ses API à raison déclarée (`UserDefaults`, etc.).
 
 ## Liquid Glass

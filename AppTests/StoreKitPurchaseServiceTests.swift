@@ -6,10 +6,10 @@ import Testing
 /// Achats simulés via `Products.storekit`, sans App Store ni compte sandbox.
 /// StoreKitTest exige une app hôte et un simulateur de la même version que le SDK :
 /// ces tests ne peuvent pas vivre dans le package Monetization.
-/// Connu : l'achat échoue au tout premier lancement d'un simulateur neuf, puis passe.
+/// Sur un simulateur jamais démarré, l'achat peut rester bloqué : `timeLimit` évite de bloquer la CI.
 /// `.serialized` : la session StoreKit de test est globale au process.
 @MainActor
-@Suite(.serialized)
+@Suite(.serialized, .timeLimit(.minutes(1)))
 struct StoreKitPurchaseServiceTests {
     private static let premiumID = "com.example.apptemplate.premium.yearly"
     private let session: SKTestSession
