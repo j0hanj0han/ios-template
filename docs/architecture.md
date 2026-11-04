@@ -99,7 +99,7 @@ La valeur est `nil` dans les previews : la vue s'affiche, le bouton ne fait rien
 - Produits de test : `Packages/Monetization/StoreKit/Products.storekit`, branché sur l'action Run du scheme. Lancée depuis Xcode, l'app achète sans App Store ni compte sandbox. Chaque app y remplace `com.example.apptemplate.premium.yearly` par ses vrais identifiants, comme dans `App/`.
 - Test d'achat automatisé : `AppTests/` (cible `AppTemplateTests`) achète via `SKTestSession` avec ce même fichier. StoreKitTest impose :
   - une **app hôte** : ces tests ne peuvent pas vivre dans le package Monetization ;
-  - un **simulateur de la même version que le SDK** : avec Xcode 27.2, le test passe sur iOS 27.2 et échoue toujours sur iOS 26.5 (aucun produit renvoyé).
+  - un **simulateur de la même version que le SDK** : avec Xcode 27.2, le test passe sur iOS 27.2 et échoue toujours sur iOS 26.5 (aucun produit renvoyé). Pour la même raison, la CI fige Xcode 27.0 : l'image `xcode-27` n'a de simulateur iPhone qu'en iOS 27.0.
 - Connu : sur un simulateur jamais démarré, l'achat échoue au premier lancement puis passe. Cause non confirmée : piste de l'app hôte qui appelle `purchases.start()` avant que le test installe sa configuration.
 - `App/PrivacyInfo.xcprivacy` : manifeste de confidentialité exigé par l'App Store, vide dans le template. Chaque app y déclare ce qu'elle collecte et ses API à raison déclarée (`UserDefaults`, etc.).
 
