@@ -15,7 +15,7 @@ Si le squelette n'existe pas encore : génère-le d'après l'arborescence ci-des
 ## Arborescence
 ```
 App/            point d'entrée + composition, rien d'autre
-AppTests/       tests qui ont besoin de l'app hôte (achats StoreKitTest, scheme AppTemplatePurchases, hors CI)
+AppTests/       tests qui ont besoin de l'app hôte (achats StoreKitTest)
 Packages/
   Core/         modèles, protocoles de services
   DesignSystem/ tokens, composants, wrapper Liquid Glass

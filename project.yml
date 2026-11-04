@@ -84,17 +84,9 @@ schemes:
         - package: Core/CoreTests
         - package: Monetization/MonetizationTests
         - package: FeatureHome/FeatureHomeTests
+        - AppTemplateTests
     run:
       config: Debug
       storeKitConfiguration: Packages/Monetization/StoreKit/Products.storekit
     archive:
       config: Release
-  # Test d'achat StoreKitTest, à lancer en local : hors CI, car le premier achat
-  # bloque sur un simulateur neuf (voir docs/architecture.md).
-  AppTemplatePurchases:
-    build:
-      targets:
-        AppTemplate: all
-    test:
-      targets:
-        - AppTemplateTests

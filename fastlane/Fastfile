@@ -13,6 +13,10 @@ platform :ios do
       project: PROJECT,
       scheme: SCHEME,
       device: TEST_DEVICE,
+      # Sur un simulateur neuf (toujours le cas en CI), le premier achat StoreKitTest bloque
+      # et passe au lancement suivant : un test en échec est relancé une fois, dans un nouveau process.
+      number_of_retries: 1,
+      xcargs: "-test-repetition-relaunch-enabled YES",
       result_bundle: true,
       output_directory: "fastlane/test_output"
     )
