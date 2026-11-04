@@ -6,7 +6,8 @@ import Testing
 /// Achats simulés via `Products.storekit`, sans App Store ni compte sandbox.
 /// StoreKitTest exige une app hôte et un simulateur de la même version que le SDK :
 /// ces tests ne peuvent pas vivre dans le package Monetization.
-/// Sur un simulateur jamais démarré, l'achat peut rester bloqué : `timeLimit` évite de bloquer la CI.
+/// Hors CI, scheme `AppTemplatePurchases` : sur un simulateur jamais démarré, le premier achat
+/// bloque, puis passe au lancement suivant. `timeLimit` coupe ce blocage au bout d'une minute.
 /// `.serialized` : la session StoreKit de test est globale au process.
 @MainActor
 @Suite(.serialized, .timeLimit(.minutes(1)))

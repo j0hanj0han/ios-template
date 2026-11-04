@@ -99,9 +99,9 @@ La valeur est `nil` dans les previews : la vue s'affiche, le bouton ne fait rien
 - Produits de test : `Packages/Monetization/StoreKit/Products.storekit`, branché sur l'action Run du scheme. Lancée depuis Xcode, l'app achète sans App Store ni compte sandbox. Chaque app y remplace `com.example.apptemplate.premium.yearly` par ses vrais identifiants, comme dans `App/`.
 - Test d'achat automatisé : `AppTests/` (cible `AppTemplateTests`) achète via `SKTestSession` avec ce même fichier. StoreKitTest impose :
   - une **app hôte** : ces tests ne peuvent pas vivre dans le package Monetization ;
-  - un **simulateur de la même version que le SDK** : avec Xcode 27.2, le test passe sur iOS 27.2 et échoue toujours sur iOS 26.5 (aucun produit renvoyé). Pour la même raison, la CI fige Xcode 27.0 : l'image `xcode-27` n'a de simulateur iPhone qu'en iOS 27.0.
+  - un **simulateur de la même version que le SDK** : avec Xcode 27.2, le test passe sur iOS 27.2 et échoue toujours sur iOS 26.5 (aucun produit renvoyé). La CI fige Xcode 27.0, aligné sur le seul simulateur iPhone de l'image `xcode-27` (iOS 27.0).
 - Quand l'app sert d'hôte aux tests, elle n'appelle pas `purchases.start()` : interroger StoreKit avant que le test installe sa configuration laissait un simulateur neuf sans produits (`productNotFound`).
-- Connu : sur un simulateur jamais démarré, l'achat lui-même peut rester bloqué. Le test a une limite d'une minute pour ne pas bloquer la CI.
+- Connu : sur un simulateur jamais démarré, le premier achat bloque, puis passe au lancement suivant. La CI démarre toujours sur un simulateur neuf : ce test n'y tourne donc pas. Il a son propre scheme, `AppTemplatePurchases`, à lancer en local avant de toucher à `Monetization` ou à `Products.storekit`. Le test a une limite d'une minute pour ne jamais rester bloqué.
 - `App/PrivacyInfo.xcprivacy` : manifeste de confidentialité exigé par l'App Store, vide dans le template. Chaque app y déclare ce qu'elle collecte et ses API à raison déclarée (`UserDefaults`, etc.).
 
 ## Liquid Glass
