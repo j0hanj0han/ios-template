@@ -53,6 +53,26 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         TARGETED_DEVICE_FAMILY: "1"
 
+  # Tests d'intégration qui ont besoin de l'app hôte (StoreKitTest).
+  AppTemplateTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - AppTests
+      - path: Packages/Monetization/StoreKit/Products.storekit
+        buildPhase: resources
+    dependencies:
+      - target: AppTemplate
+      - package: Core
+      - package: Monetization
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.apptemplate.tests
+        GENERATE_INFOPLIST_FILE: YES
+        # Le header SKTestTransaction.h du SDK utilise une API StoreKit 1 dépréciée :
+        # sans ça, -Werror fait échouer la précompilation du module StoreKitTest.
+        OTHER_SWIFT_FLAGS: $(inherited) -Xcc -Wno-deprecated-declarations
+
 schemes:
   AppTemplate:
     build:
@@ -64,6 +84,7 @@ schemes:
         - package: Core/CoreTests
         - package: Monetization/MonetizationTests
         - package: FeatureHome/FeatureHomeTests
+        - AppTemplateTests
     run:
       config: Debug
       storeKitConfiguration: Packages/Monetization/StoreKit/Products.storekit

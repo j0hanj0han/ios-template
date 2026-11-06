@@ -97,7 +97,11 @@ La valeur est `nil` dans les previews : la vue s'affiche, le bouton ne fait rien
 ## Monétisation
 
 - Produits de test : `Packages/Monetization/StoreKit/Products.storekit`, branché sur l'action Run du scheme. Lancée depuis Xcode, l'app achète sans App Store ni compte sandbox. Chaque app y remplace `com.example.apptemplate.premium.yearly` par ses vrais identifiants, comme dans `App/`.
-- Pas de test d'achat automatisé : `SKTestSession` ne renvoie aucun produit dans les tests de ce projet, même hébergés par l'app (constaté avec Xcode 27.2 et le simulateur iOS 26.5).
+- Test d'achat automatisé : `AppTests/` (cible `AppTemplateTests`) achète via `SKTestSession` avec ce même fichier. StoreKitTest impose :
+  - une **app hôte** : ces tests ne peuvent pas vivre dans le package Monetization ;
+  - un **simulateur de la même version que le SDK** : avec Xcode 27.2, le test passe sur iOS 27.2 et échoue toujours sur iOS 26.5 (aucun produit renvoyé). La CI fige Xcode 27.0, aligné sur le seul simulateur iPhone de l'image `xcode-27` (iOS 27.0).
+- Quand l'app sert d'hôte aux tests, elle n'appelle pas `purchases.start()` : interroger StoreKit avant que le test installe sa configuration laissait un simulateur neuf sans produits (`productNotFound`).
+- Connu : sur un simulateur jamais démarré, le premier achat bloque, puis passe au lancement suivant. Les logs du simulateur (iOS 27.2) montrent pourquoi : faute de compte App Store de test actif, `storekitd` lance une authentification Apple ID, et AuthKit attend une fenêtre de connexion que personne ne remplit (`disableDialogs` ne la couvre pas). Démarrer le simulateur à l'avance n'y change rien. La CI démarre toujours sur un simulateur neuf : le test a donc une limite d'une minute, et la lane `test` relance une fois un test en échec, dans un nouveau process (`number_of_retries` dans le Fastfile). Un vrai bug échoue aux deux passages.
 - `App/PrivacyInfo.xcprivacy` : manifeste de confidentialité exigé par l'App Store, vide dans le template. Chaque app y déclare ce qu'elle collecte et ses API à raison déclarée (`UserDefaults`, etc.).
 
 ## Liquid Glass

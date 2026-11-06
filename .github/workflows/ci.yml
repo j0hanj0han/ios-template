@@ -12,7 +12,9 @@ concurrency:
 
 jobs:
   test:
-    if: github.event_name == 'pull_request'
+    # Aussi sur main : un cache créé sur main est lisible par toutes les PR,
+    # alors que celui d'une PR ne sert qu'à elle.
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: xcode-27
     steps:
       - uses: actions/checkout@v5

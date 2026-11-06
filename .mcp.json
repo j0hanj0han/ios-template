@@ -1,9 +1,11 @@
 {
   "mcpServers": {
-    "XcodeBuildMCP": {
+    "MobileBuildMCP": {
       "type": "stdio",
-      "command": "xcodebuildmcp",
+      "command": "npx",
       "args": [
+        "-y",
+        "mobilebuildmcp@2.7.1",
         "mcp"
       ],
       "env": {}

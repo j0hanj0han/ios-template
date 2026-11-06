@@ -19,7 +19,16 @@ struct AppTemplateApp: App {
             HomeView()
                 .environment(entitlements)
                 .environment(\.purchaseService, purchases)
-                .task { await purchases.start() }
+                .task {
+                    // Hôte des tests : c'est le test qui installe la configuration StoreKit.
+                    // Interroger StoreKit avant lui laisse un simulateur neuf sans produits.
+                    guard !Self.isTestHost else { return }
+                    await purchases.start()
+                }
         }
+    }
+
+    private static var isTestHost: Bool {
+        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }
 }

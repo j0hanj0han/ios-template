@@ -1,17 +1,28 @@
 name: Setup
-description: Xcode, Ruby (Gemfile.lock) et Mint (Mintfile)
+description: Xcode, Ruby (Gemfile.lock) et outils Mint (Mintfile)
 runs:
   using: composite
   steps:
+    # L'image xcode-27 n'a de simulateur iPhone qu'en iOS 27.0. Le test d'achat (StoreKitTest)
+    # exige un simulateur de la même version que le SDK : on prend donc Xcode 27.0.
     - uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: "27.2"
+        xcode-version: "27.0"
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-    - uses: actions/cache@v4
+    - id: mint-cache
+      uses: actions/cache/restore@v4
       with:
         path: ~/.mint
         key: mint-${{ runner.os }}-${{ hashFiles('Mintfile') }}
     - shell: bash
-      run: brew install mint
+      run: |
+        brew install mint
+        mint bootstrap
+    # Sauvé dès l'installation, pas en fin de job : le cache survit à l'échec des tests.
+    - if: steps.mint-cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: ~/.mint
+        key: ${{ steps.mint-cache.outputs.cache-primary-key }}
