@@ -280,6 +280,8 @@ flowchart LR
 - **Runner** : image GitHub `xcode-27`. La CI fige Xcode 27.0, aligné sur le seul simulateur iPhone de l'image (iOS 27.0).
 - **Cache mint** : sauvé dès l'installation des outils, même si les tests échouent ensuite. Le job `test` tourne aussi sur `main`, pour que toutes les PR profitent de son cache. Sans cache, compiler les outils prend environ 15 minutes.
 - **Signature** : `beta` et `release` utilisent match en lecture seule et une clé API App Store Connect. Tout se configure avec `/ios-toolkit:setup-ci` : variables et secrets GitHub, jamais de secret dans le repo.
+- **Signature Release** : dans `project.yml`, la configuration Release de l'app est en signature manuelle, avec `Apple Distribution` et le profil `match AppStore <bundle id>`. L'équipe vient de `${TEAM_ID}`, lu dans l'environnement par `xcodegen generate` : la CI le reçoit de la variable de repo `TEAM_ID`. Pour un archive Release en local, générer avec `TEAM_ID=<team id> mint run xcodegen generate`. Debug reste en signature automatique.
+- **Icône** : `AppIcon.png` est une icône neutre de 1024 × 1024, sans transparence, pour que les premiers builds TestFlight soient acceptés. Chaque app la remplace avant sa sortie.
 
 ---
 
